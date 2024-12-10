@@ -2,7 +2,8 @@ from diffusers import FluxPipeline, FluxTransformer2DModel
 from transformers import T5EncoderModel
 import torch
 import gc
-
+from huggingface_hub import login
+login("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")
 
 lora_weight = "/workspace/dreambooth/trained-flux-lora_headphones/pytorch_lora_weights.safetensors"
 
