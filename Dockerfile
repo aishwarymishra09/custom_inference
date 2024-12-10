@@ -1,6 +1,5 @@
 FROM runpod/pytorch:3.10-2.0.0-117
 
-
 WORKDIR /workspace
 
 # SHELL ["/bin/bash", "-c"]
@@ -20,11 +19,11 @@ RUN pip3 install --no-cache-dir -r /requirements.txt && \
 
 # Fetch the model
 COPY builder/test_8_gb_process.py /test_8_gb_process.py
-RUN python /test_8_gb_process.py
+CMD python /test_8_gb_process.py
 RUN rm /test_8_gb_process.py
 
 COPY builder/download.py /download.py
-RUN python /download.py
+CMD python /download.py
 RUN rm /download.py
 # Add src files (Worker Template)
 ADD src .
