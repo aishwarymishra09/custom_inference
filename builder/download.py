@@ -2,8 +2,8 @@ import os
 import boto3
 from urllib.parse import urlparse
 
-ACCESS_KEY_ID = os.getenv("ackey")
-SECRET_ACCESS_KEY = os.getenv("sckey")
+ACCESS_KEY_ID = os.environ['ackey']
+SECRET_ACCESS_KEY = os.environ['sckey']
 BUCKET_NAME = "rekogniz-training-data"
 
 def download_directory_from_s3_uri(s3_uri, local_directory):

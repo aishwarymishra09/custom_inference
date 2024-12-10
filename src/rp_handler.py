@@ -11,8 +11,8 @@ from io import BytesIO
 from rp_schema import INPUT_SCHEMA
 from src.flux_inf_quant import inference_sample
 
-ACCESS_KEY_ID = os.getenv("ackey")
-SECRET_ACCESS_KEY = os.getenv("sckey")
+ACCESS_KEY_ID = os.environ['ackey']
+SECRET_ACCESS_KEY = os.environ['sckey']
 BUCKET_NAME = "rekogniz-training-data"
 def save_image(image, path):
     """Uploads an image to an S3 bucket"""
