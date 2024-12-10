@@ -9,12 +9,14 @@ import requests
 import argparse
 from pathlib import Path
 from urllib.parse import urlparse
+
+import torch
 from transformers import T5EncoderModel
 from diffusers import StableDiffusionPipeline
 from diffusers import FluxPipeline, FluxTransformer2DModel
 from huggingface_hub import login
 login("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")
-SAFETY_MODEL_ID = "black-forest-labs/FLUX.1-dev"
+MODEL_ID = "black-forest-labs/FLUX.1-dev"
 MODEL_CACHE_DIR = "diffusers-cache"
 ckpt_4bit_id = "sayakpaul/flux.1-dev-nf4-pkg"
 
@@ -43,13 +45,17 @@ def download_model(model_url: str):
     #     cache_dir=model_cache_path,
     # )
 
-    FluxPipeline.from_pretrained(
-        model_id,
-        cache_dir=model_cache_path,
-    )
-    T5EncoderModel.from_pretrained(
+    text_encoder_2_4bit = T5EncoderModel.from_pretrained(
         ckpt_4bit_id,
         subfolder="text_encoder_2",
+    )
+
+    FluxPipeline.from_pretrained(
+        MODEL_ID,
+        text_encoder_2=text_encoder_2_4bit,
+        transformer=None,
+        vae=None,
+        torch_dtype=torch.float16,
     )
 
 
