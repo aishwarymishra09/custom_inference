@@ -2,6 +2,9 @@ import os
 import boto3
 from urllib.parse import urlparse
 
+ACCESS_KEY_ID = os.getenv("ackey")
+SECRET_ACCESS_KEY = os.getenv("sckey")
+BUCKET_NAME = "rekogniz-training-data"
 
 def download_directory_from_s3_uri(s3_uri, local_directory):
     """
@@ -18,8 +21,8 @@ def download_directory_from_s3_uri(s3_uri, local_directory):
     s3_prefix = parsed_url.path.lstrip('/')  # Remove the leading '/'
 
     # Initialize the S3 client
-    s3 = boto3.client('s3', aws_access_key_id="",
-                      aws_secret_access_key="")
+    s3 = boto3.client('s3', aws_access_key_id=ACCESS_KEY_ID,
+                      aws_secret_access_key=SECRET_ACCESS_KEY)
 
     # Ensure the local directory exists
     if not os.path.exists(local_directory):
