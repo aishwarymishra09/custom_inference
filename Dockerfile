@@ -12,8 +12,8 @@ RUN apt-get update && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
 
-ENV ACCESSK = $RUNPOD_SECRET_ackey
-RUN echo ACCESSK
+
+RUN echo $RUNPOD_SECRET_ackey
 
 # Install Python dependencies (Worker Template)
 COPY builder/requirements.txt /requirements.txt
