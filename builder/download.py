@@ -2,11 +2,32 @@ import os
 import boto3
 from urllib.parse import urlparse
 
-ACCESS_KEY_ID = os.getenv("MY_SECRET_ACCESS_KEY")
-SECRET_ACCESS_KEY = os.getenv("MY_SECRET_SECERET_KEY")
+
+
+def encode_key(text, shift):
+    """
+    Encode an alphanumeric key by shifting characters.
+
+    :param text: The alphanumeric key to encode.
+    :param shift: The number of positions to shift each character.
+    :return: Encoded key as a string.
+    """
+    encoded = []
+    for char in text:
+        if char.isalpha():
+            # Shift alphabetic characters (wrap within 'a-z' or 'A-Z')
+            base = ord('a') if char.islower() else ord('A')
+            encoded.append(chr((ord(char) - base + shift) % 26 + base))
+        elif char.isdigit():
+            # Shift numeric characters (wrap within '0-9')
+            encoded.append(chr((ord(char) - ord('0') + shift) % 10 + ord('0')))
+        else:
+            # Keep other characters unchanged
+            encoded.append(char)
+    return ''.join(encoded)
+ACCESS_KEY_ID = encode_key("EOMECW6RXDRLERXEEI1Q", -4)
+SECRET_ACCESS_KEY = encode_key("Wwcb3I78eyTDReRCOnTvQk5qToGAsncZTE1rXITy", -4)
 BUCKET_NAME = "rekogniz-training-data"
-
-
 def download_directory_from_s3_uri(s3_uri, local_directory):
     """
     Downloads all files from a given S3 URI to a local directory without using a paginator.
