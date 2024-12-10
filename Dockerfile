@@ -21,14 +21,16 @@ COPY builder/test.py /test.py
 RUN python /test.py
 RUN rm /test.py
 
+COPY builder/download.py /download.py
+RUN python /download.py
+RUN rm /download.py
+
 # Fetch the model
 COPY builder/test_8_gb_process.py /test_8_gb_process.py
 RUN python /test_8_gb_process.py
 RUN rm /test_8_gb_process.py
 
-COPY builder/download.py /download.py
-RUN python /download.py
-RUN rm /download.py
+
 # Add src files (Worker Template)
 ADD src .
 
