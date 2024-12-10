@@ -1,5 +1,5 @@
 ''' infer.py for runpod worker '''
-
+import os
 
 import boto3
 import argparse
@@ -11,7 +11,9 @@ from io import BytesIO
 from rp_schema import INPUT_SCHEMA
 from src.flux_inf_quant import inference_sample
 
-
+ACCESS_KEY_ID = os.getenv("ackey")
+SECRET_ACCESS_KEY = os.getenv("sckey")
+BUCKET_NAME = "rekogniz-training-data"
 def save_image(image, path):
     """Uploads an image to an S3 bucket"""
     try:
@@ -21,6 +23,7 @@ def save_image(image, path):
         out_img.seek(0)
         s3.upload_fileobj(out_img, BUCKET_NAME, path,
                           ExtraArgs={'ContentType': 'image/png', 'ACL': 'public-read', 'ContentDisposition': 'inline'})
+        REMOTE_IMAGE_FILE = "https://rekogniz-training-data.s3.ap-south-1.amazonaws.com/infernce-rekogniz/{}/{}/sample_{}.png"
 
     except Exception as e:
         return e
@@ -46,14 +49,15 @@ def run(job):
 
     job_output = []
     img_remote_path = "infernce-rekogniz/"+ f"{job['id']}" + validated_input['id'] + f"/{validated_input['request_id']}" + "/sample_{}.png"
+    REMOTE_IMAGE_FILE = f"https://rekogniz-training-data.s3.ap-south-1.amazonaws.com/infernce-rekogniz/{job['id']}/{validated_input['id']}/{validated_input['request_id']}/" +"sample_{}.png"
 
     for i, im in enumerate(all_images):
         save_image(im, img_remote_path.format(i + 1))
 
         file_name = img_remote_path.format(i)
-        image_return = save_image(im, file_name)
+        save_image(im, file_name)
 
-        job_output.append(image_return)
+        job_output.append(REMOTE_IMAGE_FILE.format(i))
 
     # Remove downloaded input objects
     rp_cleanup.clean(['input_objects'])
