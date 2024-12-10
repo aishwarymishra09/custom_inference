@@ -9,16 +9,14 @@ import requests
 import argparse
 from pathlib import Path
 from urllib.parse import urlparse
-
+from transformers import T5EncoderModel
 from diffusers import StableDiffusionPipeline
-from diffusers.pipelines.stable_diffusion.safety_checker import (
-    StableDiffusionSafetyChecker,
-)
+from diffusers import FluxPipeline, FluxTransformer2DModel
 from huggingface_hub import login
 login("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")
 SAFETY_MODEL_ID = "black-forest-labs/FLUX.1-dev"
 MODEL_CACHE_DIR = "diffusers-cache"
-
+ckpt_4bit_id = "sayakpaul/flux.1-dev-nf4-pkg"
 
 def download_model(model_url: str):
     '''
@@ -40,14 +38,18 @@ def download_model(model_url: str):
                 if chunk:
                     f.write(chunk)
 
-    StableDiffusionSafetyChecker.from_pretrained(
-        SAFETY_MODEL_ID,
-        cache_dir=model_cache_path,
-    )
+    # StableDiffusionSafetyChecker.from_pretrained(
+    #     SAFETY_MODEL_ID,
+    #     cache_dir=model_cache_path,
+    # )
 
-    StableDiffusionPipeline.from_pretrained(
+    FluxPipeline.from_pretrained(
         model_id,
         cache_dir=model_cache_path,
+    )
+    T5EncoderModel.from_pretrained(
+        ckpt_4bit_id,
+        subfolder="text_encoder_2",
     )
 
 

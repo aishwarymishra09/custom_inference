@@ -8,7 +8,8 @@ from constants.properties import ACCESS_KEY_ID, SECRET_ACCESS_KEY, BUCKET_NAME
 from transformers import T5EncoderModel
 import torch
 import gc
-
+from huggingface_hub import login
+login("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")
 
 def flush():
     gc.collect()
