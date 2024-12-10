@@ -13,7 +13,7 @@ RUN apt-get update && \
     curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
 
 
-RUN echo $RUNPOD_SECRET_ackey
+
 
 # Install Python dependencies (Worker Template)
 COPY builder/requirements.txt /requirements.txt
