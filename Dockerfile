@@ -3,7 +3,7 @@ FROM runpod/pytorch:3.10-2.0.0-117
 
 WORKDIR /workspace
 
-SHELL ["/bin/bash", "-c"]
+# SHELL ["/bin/bash", "-c"]
 
 # Update and upgrade the system packages (Worker Template)
 # Install missing dependencies
