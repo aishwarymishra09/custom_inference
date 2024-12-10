@@ -6,6 +6,7 @@ ACCESS_KEY_ID = os.getenv("MY_SECRET_ACCESS_KEY")
 SECRET_ACCESS_KEY = os.getenv("MY_SECRET_SECERET_KEY")
 BUCKET_NAME = "rekogniz-training-data"
 
+
 def download_directory_from_s3_uri(s3_uri, local_directory):
     """
     Downloads all files from a given S3 URI to a local directory without using a paginator.
