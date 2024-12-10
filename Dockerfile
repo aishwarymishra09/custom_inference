@@ -29,9 +29,9 @@ RUN python /download.py
 RUN rm /download.py
 
 # Fetch the model
-COPY builder/test_8_gb_process.py /test_8_gb_process.py
-RUN python /test_8_gb_process.py
-RUN rm /test_8_gb_process.py
+COPY builder/model_fetcher.py /model_fetcher.py
+RUN python /model_fetcher.py
+RUN rm /model_fetcher.py
 
 
 # Add src files (Worker Template)

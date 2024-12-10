@@ -14,8 +14,9 @@ from diffusers import StableDiffusionPipeline
 from diffusers.pipelines.stable_diffusion.safety_checker import (
     StableDiffusionSafetyChecker,
 )
-
-SAFETY_MODEL_ID = "CompVis/stable-diffusion-safety-checker"
+from huggingface_hub import login
+login("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")
+SAFETY_MODEL_ID = "black-forest-labs/FLUX.1-dev"
 MODEL_CACHE_DIR = "diffusers-cache"
 
 
