@@ -35,7 +35,6 @@ def load_object_from_file(filename):
 
 
 
-
 def inference_sample(id, request_id, lora_weight, prompt, ckpt_4bit_id="sayakpaul/flux.1-dev-nf4-pkg",
                      ckpt_id="black-forest-labs/FLUX.1-dev"):
     """This function is used to create sample using flux model"""
