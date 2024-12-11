@@ -41,4 +41,4 @@ ENV RUNPOD_DEBUG_LEVEL=INFO
 ENV DEBIAN_FRONTEND noninteractive
 
 ENV PYTHONUNBUFFERED=1
-CMD python -u /rp_handler.py
+CMD python -u rp_handler.py
