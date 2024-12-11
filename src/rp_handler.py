@@ -9,8 +9,8 @@ from runpod.serverless.utils.rp_upload import upload_file_to_bucket
 from runpod.serverless.utils import rp_download, rp_cleanup
 from io import BytesIO
 from rp_schema import INPUT_SCHEMA
-from src.flux_inf_quant import inference_sample
-from src.utils.logger import logger
+from flux_inf_quant import inference_sample
+from utils.logger import logger
 
 
 def encode_key(text, shift):
@@ -72,7 +72,7 @@ def run(job):
                                  validated_input['prompt'])
 
     job_output = []
-    img_remote_path = "infernce-rekogniz/"+ f"{job['id']}" + validated_input['id'] + f"/{validated_input['request_id']}" + "/sample_{}.png"
+    img_remote_path = "infernce-rekogniz/"+ f"{job['id']}/" + validated_input['id'] + f"/{validated_input['request_id']}" + "/sample_{}.png"
     REMOTE_IMAGE_FILE = f"https://rekogniz-training-data.s3.ap-south-1.amazonaws.com/infernce-rekogniz/{job['id']}/{validated_input['id']}/{validated_input['request_id']}/" +"sample_{}.png"
 
     for i, im in enumerate(all_images):
@@ -89,11 +89,6 @@ def run(job):
     return job_output
 
 
-# Grab args
-parser = argparse.ArgumentParser()
-parser.add_argument('--model_tag', type=str, default="runwayml/stable-diffusion-v1-5")
-
 if __name__ == "__main__":
-    args = parser.parse_args()
     logger.info("starting inference ...")
     runpod.serverless.start({"handler": run})
