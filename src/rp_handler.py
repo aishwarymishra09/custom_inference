@@ -90,5 +90,7 @@ def run(job):
 
 
 if __name__ == "__main__":
+    inference_sample("121", "24234", lora_weight="/workspace/dreambooth/trained-flux-lora_headphones/pytorch_lora_weights.safetensors",
+                     prompt="a man wearing pqw1 headphones")
     logger.info("starting inference ...")
     runpod.serverless.start({"handler": run})
