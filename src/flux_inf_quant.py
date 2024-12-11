@@ -4,7 +4,6 @@ import boto3
 import pickle
 from io import BytesIO
 from diffusers import FluxPipeline, FluxTransformer2DModel
-from constants.properties import ACCESS_KEY_ID, SECRET_ACCESS_KEY, BUCKET_NAME
 from transformers import T5EncoderModel
 import torch
 from src.utils.logger import logger
