@@ -6,7 +6,7 @@ from io import BytesIO
 from diffusers import FluxPipeline, FluxTransformer2DModel
 from transformers import T5EncoderModel
 import torch
-from src.utils.logger import logger
+from utils.logger import logger
 import gc
 from huggingface_hub import login
 login("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")
