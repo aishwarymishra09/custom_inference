@@ -10,6 +10,8 @@ from runpod.serverless.utils import rp_download, rp_cleanup
 from io import BytesIO
 from rp_schema import INPUT_SCHEMA
 from src.flux_inf_quant import inference_sample
+from src.utils.logger import logger
+
 
 def encode_key(text, shift):
     """
@@ -93,5 +95,5 @@ parser.add_argument('--model_tag', type=str, default="runwayml/stable-diffusion-
 
 if __name__ == "__main__":
     args = parser.parse_args()
-
+    logger.info("starting inference ...")
     runpod.serverless.start({"handler": run})
