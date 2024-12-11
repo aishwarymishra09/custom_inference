@@ -59,34 +59,38 @@ def run(job):
     Run inference on the model.
     Returns output path, width the seed used to generate the image.
     '''
-    job_input = job['input']
+    try:
+        job_input = job['input']
 
-    # Input validation
-    validated_input = validate(job_input, INPUT_SCHEMA)
+        # Input validation
+        validated_input = validate(job_input, INPUT_SCHEMA)
 
-    if 'errors' in validated_input:
-        return {"error": validated_input['errors']}
-    validated_input = validated_input['validated_input']
+        if 'errors' in validated_input:
+            return {"error": validated_input['errors']}
+        validated_input = validated_input['validated_input']
 
-    all_images = inference_sample(validated_input['id'], validated_input['request_id'], validated_input['lora'],
-                                 validated_input['prompt'])
+        all_images = inference_sample(validated_input['id'], validated_input['request_id'], validated_input['lora'],
+                                     validated_input['prompt'])
 
-    job_output = []
-    img_remote_path = "infernce-rekogniz/"+ f"{job['id']}/" + validated_input['id'] + f"/{validated_input['request_id']}" + "/sample_{}.png"
-    REMOTE_IMAGE_FILE = f"https://rekogniz-training-data.s3.ap-south-1.amazonaws.com/infernce-rekogniz/{job['id']}/{validated_input['id']}/{validated_input['request_id']}/" +"sample_{}.png"
+        job_output = []
+        img_remote_path = "infernce-rekogniz/"+ f"{job['id']}/" + validated_input['id'] + f"/{validated_input['request_id']}" + "/sample_{}.png"
+        REMOTE_IMAGE_FILE = f"https://rekogniz-training-data.s3.ap-south-1.amazonaws.com/infernce-rekogniz/{job['id']}/{validated_input['id']}/{validated_input['request_id']}/" +"sample_{}.png"
 
-    for i, im in enumerate(all_images):
-        save_image(im, img_remote_path.format(i + 1))
+        for i, im in enumerate(all_images):
+            save_image(im, img_remote_path.format(i + 1))
 
-        file_name = img_remote_path.format(i)
-        save_image(im, file_name)
+            file_name = img_remote_path.format(i)
+            save_image(im, file_name)
 
-        job_output.append(REMOTE_IMAGE_FILE.format(i))
+            job_output.append(REMOTE_IMAGE_FILE.format(i))
 
-    # Remove downloaded input objects
-    rp_cleanup.clean(['input_objects'])
+        # Remove downloaded input objects
+        rp_cleanup.clean(['input_objects'])
+        return job_output
+    except Exception as e:
+        logger.error(f"error occured due to {e}")
 
-    return job_output
+
 
 
 if __name__ == "__main__":
