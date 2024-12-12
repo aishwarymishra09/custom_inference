@@ -35,8 +35,8 @@ def load_object_from_file(filename):
 
 
 
-def inference_sample(id, request_id, lora_weight, prompt, ckpt_4bit_id="workspace/flux-dev-1-nf4",
-                     ckpt_id="workspace/flux-dev-1"):
+def inference_sample(id, request_id, lora_weight, prompt, ckpt_4bit_id="/workspace/flux-dev-1-nf4",
+                     ckpt_id="/workspace/flux-dev-1"):
     """This function is used to create sample using flux model"""
     flush()
     logger.info(f"{lora_weight} #########")
