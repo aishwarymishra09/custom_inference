@@ -35,8 +35,8 @@ def load_object_from_file(filename):
 
 
 
-def inference_sample(id, request_id, lora_weight, prompt, ckpt_4bit_id="sayakpaul/flux.1-dev-nf4-pkg",
-                     ckpt_id="black-forest-labs/FLUX.1-dev"):
+def inference_sample(id, request_id, lora_weight, prompt, ckpt_4bit_id="workspace/flux-dev-1-nf4",
+                     ckpt_id="workspace/flux-dev-1"):
     """This function is used to create sample using flux model"""
     flush()
     logger.info(f"{lora_weight} #########")
@@ -79,8 +79,6 @@ def inference_sample(id, request_id, lora_weight, prompt, ckpt_4bit_id="sayakpau
     )
     p2c = time.time()
     print(f"time taken by pipeline2:{p2c - tc}")
-    # save_object_to_file(pipeline, filename="flux.pkl")
-    # pipeline = load_object_from_file("flux.pkl")
 
     pipeline.load_lora_weights(lora_weight)
     pipeline.enable_model_cpu_offload()
