@@ -96,5 +96,5 @@ def run(job):
 
 if __name__ == "__main__":
     logger.info("starting inference ...")
-    logger.info(f"############{os.getcwd()}######")
+    logger.info(f"############{os.listdir(os.getcwd())}######")
     runpod.serverless.start({"handler": run})
