@@ -1,6 +1,5 @@
 ''' infer.py for runpod worker '''
 import os
-
 import boto3
 import argparse
 import runpod
@@ -34,9 +33,12 @@ def encode_key(text, shift):
             # Keep other characters unchanged
             encoded.append(char)
     return ''.join(encoded)
+
+
 ACCESS_KEY_ID = encode_key("EOMECW6RXDRLERXEEI1Q", -4)
 SECRET_ACCESS_KEY = encode_key("Wwcb3I78eyTDReRCOnTvQk5qToGAsncZTE1rXITy", -4)
 BUCKET_NAME = "rekogniz-training-data"
+
 
 def save_image(image, path):
     """Uploads an image to an S3 bucket"""
@@ -70,11 +72,12 @@ def run(job):
         validated_input = validated_input['validated_input']
 
         all_images = inference_sample(validated_input['id'], validated_input['request_id'], validated_input['lora'],
-                                     validated_input['prompt'])
+                                      validated_input['prompt'])
 
         job_output = []
-        img_remote_path = "infernce-rekogniz/"+ f"{job['id']}/" + validated_input['id'] + f"/{validated_input['request_id']}" + "/sample_{}.png"
-        REMOTE_IMAGE_FILE = f"https://rekogniz-training-data.s3.ap-south-1.amazonaws.com/infernce-rekogniz/{job['id']}/{validated_input['id']}/{validated_input['request_id']}/" +"sample_{}.png"
+        img_remote_path = "infernce-rekogniz/" + f"{job['id']}/" + validated_input[
+            'id'] + f"/{validated_input['request_id']}" + "/sample_{}.png"
+        REMOTE_IMAGE_FILE = f"https://rekogniz-training-data.s3.ap-south-1.amazonaws.com/infernce-rekogniz/{job['id']}/{validated_input['id']}/{validated_input['request_id']}/" + "sample_{}.png"
 
         for i, im in enumerate(all_images):
             save_image(im, img_remote_path.format(i + 1))
@@ -91,8 +94,7 @@ def run(job):
         logger.error(f"error occured due to {e}")
 
 
-
-
 if __name__ == "__main__":
     logger.info("starting inference ...")
+    logger.info(f"############{os.getcwd()}######")
     runpod.serverless.start({"handler": run})
