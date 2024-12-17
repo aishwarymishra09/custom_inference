@@ -19,6 +19,6 @@ def download_model():
     from huggingface_hub import snapshot_download
     models = ['black-forest-labs/FLUX.1-dev', "sayakpaul/flux.1-dev-nf4-pkg"]
     for model in models:
-        snapshot_download(repo_id=model, local_dir=f"/workspace/{model.strip('/')[1]}")
+        snapshot_download(repo_id=model, local_dir=f"/workspace/{model.split('/')[1]}")
 
 download_model()
